@@ -127,7 +127,7 @@ const Index = () => {
   return (
     <div>
       <main className="d-flex flex-column justify-content-center align-items-center">
-        <h1 className="">
+        <h1 className={styles.title + " my-4 "}>
           <span className={styles.i}>/</span>
           <span className={styles.i2}>/</span>
           <span className={styles.o1}>O</span>
