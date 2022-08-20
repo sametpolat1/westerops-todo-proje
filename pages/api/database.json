@@ -1,0 +1,34 @@
+{
+    "todos": [
+        {
+            "id": 1661019208779,
+            "title": "Example Todo 1",
+            "checked": true,
+            "pinned": false
+        },
+        {
+            "id": 1661021129119,
+            "title": "Example Todo 2",
+            "checked": false,
+            "pinned": true
+        },
+        {
+            "id": 1661021132134,
+            "title": "Example Todo 3",
+            "checked": false,
+            "pinned": false
+        },
+        {
+            "id": 1661021143776,
+            "title": "Example Todo 4",
+            "checked": false,
+            "pinned": false
+        },
+        {
+            "id": 1661024279792,
+            "title": "Example Todo 5",
+            "checked": false,
+            "pinned": false
+        }
+    ]
+}
