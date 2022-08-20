@@ -120,7 +120,7 @@ const Index = () => {
     }
   };
   useEffect(() => {
-    const localStorageValue = [todoList];
+    const localStorageValue = todoList;
     localStorage.setItem("todoList", JSON.stringify(localStorageValue));
   }, [todoList]);
 
