@@ -24,7 +24,7 @@ const Index = () => {
       .then((response) => setTodoList(response.data))
       .catch((error) => console.log(error));
   };
-
+  // For add data into database.json with axios.
   const handlePost = async (todoName) => {
     try {
       const resp = await axios.post(`http://localhost:3000/api/todos`, {
@@ -36,7 +36,7 @@ const Index = () => {
       console.error(err);
     }
   };
-
+  //Function for the Save button inside the Update button.
   const todoSend = async (id) => {
     try {
       const resp = await axios.patch(
@@ -52,6 +52,7 @@ const Index = () => {
     }
     setTodoEdit({ isInput: false, id: "" });
   };
+  // For todo Update
   const todoUpdate = async (id, todoName) => {
     setEdittingtext(todoName);
     setTodoEdit({ isInput: true, id: id });
@@ -64,16 +65,17 @@ const Index = () => {
       console.error(err);
     }
   };
-
+  //For the save input value in update.
   const handleChangeValue = (e) => {
     setEdittingtext(e.target.value);
   };
-
+  //For add to to-do
   const handleChange = (e) => {
     e.preventDefault();
     setUserInput(e.target.value);
   };
 
+  // For add the input to database.json(api).
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -86,6 +88,7 @@ const Index = () => {
     }
   };
 
+  // For todo delete.
   const handleDelete = async (todo) => {
     await axios.delete(`http://localhost:3000/api/todos/${todo.id}`);
     const updateArr = todoList.filter(
@@ -93,7 +96,7 @@ const Index = () => {
     );
     setTodoList(updateArr);
   };
-
+  //For pinned value: false or true
   const handlePinned = async (id, todoName, pinned) => {
     try {
       const resp = await axios.patch(`http://localhost:3000/api/todos/${id}`, {
@@ -106,7 +109,7 @@ const Index = () => {
       console.error(err);
     }
   };
-
+  //For checked value : false or true
   const handleChecked = async (id, todoName, checked) => {
     try {
       const resp = await axios.patch(`http://localhost:3000/api/todos/${id}`, {
@@ -119,6 +122,8 @@ const Index = () => {
       console.error(err);
     }
   };
+
+  // For LocalStorage
   useEffect(() => {
     const localStorageValue = todoList;
     localStorage.setItem("todoList", JSON.stringify(localStorageValue));
