@@ -11,6 +11,24 @@ const Index = () => {
   const [todoEdit, setTodoEdit] = useState({ isInput: false, id: "" });
   const [todoEdittext, setEdittingtext] = useState("");
 
+  // For add the input to database.json(api).
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (userInput === "") {
+      alert("Task list not be blank!");
+    } else {
+      handlePost(userInput);
+      setTodoList([...todoList, userInput]);
+      setUserInput("");
+    }
+  };
+  //For add to to-do
+  const handleChange = (e) => {
+    e.preventDefault();
+    setUserInput(e.target.value);
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/todos")
@@ -36,6 +54,21 @@ const Index = () => {
       console.error(err);
     }
   };
+
+  // For todo Update
+  const todoUpdate = async (id, todoName) => {
+    setEdittingtext(todoName);
+    setTodoEdit({ isInput: true, id: id });
+    try {
+      const resp = await axios.patch(`http://localhost:3000/api/todos/${id}`, {
+        title: todoName,
+      });
+      console.log(resp);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   //Function for the Save button inside the Update button.
   const todoSend = async (id) => {
     try {
@@ -52,40 +85,9 @@ const Index = () => {
     }
     setTodoEdit({ isInput: false, id: "" });
   };
-  // For todo Update
-  const todoUpdate = async (id, todoName) => {
-    setEdittingtext(todoName);
-    setTodoEdit({ isInput: true, id: id });
-    try {
-      const resp = await axios.patch(`http://localhost:3000/api/todos/${id}`, {
-        title: todoName,
-      });
-      console.log(resp);
-    } catch (err) {
-      console.error(err);
-    }
-  };
   //For the save input value in update.
   const handleChangeValue = (e) => {
     setEdittingtext(e.target.value);
-  };
-  //For add to to-do
-  const handleChange = (e) => {
-    e.preventDefault();
-    setUserInput(e.target.value);
-  };
-
-  // For add the input to database.json(api).
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (userInput === "") {
-      alert("Task list not be blank!");
-    } else {
-      handlePost(userInput);
-      setTodoList([...todoList, userInput]);
-      setUserInput("");
-    }
   };
 
   // For todo delete.
