@@ -245,7 +245,7 @@ const Index = () => {
                     <span className="align-self-center d-flex">
                       <Icon
                         icon="material-symbols:push-pin-outline"
-                        color="#999C9F"
+                        color="#F53A86"
                         width="22"
                         height="22"
                       />
