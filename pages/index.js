@@ -297,52 +297,141 @@ const Index = () => {
             </ul>
             <hr />
           </div>
-          <ul className="px-5 py-2">
-            {todoList.length > 0
-              ? todoList
-                  .filter((f) => f.pinned !== true && f.checked !== true)
+          <div>
+            <h6 className={styles.todolist}>Todo List Items</h6>
+            <ul className="px-5 py-2">
+              {todoList.length > 0
+                ? todoList
+                    .filter((f) => f.pinned !== true && f.checked !== true)
 
-                  .map((todo, index) => {
-                    return todoEdit.isInput && todoEdit.id == todo.id ? (
-                      <li
-                        className={
-                          styles.dotnone + " d-flex justify-content-between"
-                        }
-                        key={index}
-                      >
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={todoEdittext}
-                          onChange={(e) => handleChangeValue(e)}
-                        />
-                        <button
-                          className="btn btn-secondary"
-                          onClick={() => todoSend(todo.id)}
+                    .map((todo, index) => {
+                      return todoEdit.isInput && todoEdit.id == todo.id ? (
+                        <li
+                          className={
+                            styles.dotnone + " d-flex justify-content-between"
+                          }
+                          key={index}
                         >
-                          Save
-                        </button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => {
-                            setTodoEdit({ isInput: false, id: "" });
-                          }}
-                        >
-                          Cancel
-                        </button>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={todoEdittext}
+                            onChange={(e) => handleChangeValue(e)}
+                          />
+                          <button
+                            className="btn btn-secondary"
+                            onClick={() => todoSend(todo.id)}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => {
+                              setTodoEdit({ isInput: false, id: "" });
+                            }}
+                          >
+                            Cancel
+                          </button>
 
-                        {todoEdit?.isInput ? (
-                          ""
-                        ) : (
+                          {todoEdit?.isInput ? (
+                            ""
+                          ) : (
+                            <div className="btn-group m-1">
+                              <button
+                                className="btn light dropdown rounded"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                id="dropdownMenuButton1"
+                                aria-expanded="false"
+                              >
+                                <b>... </b>
+                              </button>
+                              <ul
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton1"
+                              >
+                                <li>
+                                  <a
+                                    className="dropdown-item d-flex align-items-center"
+                                    href="#"
+                                  >
+                                    <Icon
+                                      icon="material-symbols:push-pin-outline"
+                                      color="black"
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        handlePinned(
+                                          todo.id,
+                                          todo.title,
+                                          todo.pinned
+                                        );
+                                      }}
+                                      // className={styles.delete}
+                                    >
+                                      Pin on the Top
+                                    </button>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    className="dropdown-item d-flex align-items-center"
+                                    href="#"
+                                  >
+                                    <Icon
+                                      icon="material-symbols:autorenew"
+                                      color="black"
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        todoUpdate(todo.id, todo.title);
+                                      }}
+                                      // className={styles.delete}
+                                    >
+                                      Update
+                                    </button>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    className="dropdown-item d-flex align-items-center"
+                                    href="#"
+                                  >
+                                    <Icon
+                                      icon="material-symbols:delete-outline"
+                                      color="black"
+                                    />
+                                    {/* 
+                            handle edit/ todo */}
+                                    <button
+                                      onClick={() => {
+                                        handleDelete(todo);
+                                      }}
+                                      // className={styles.delete}
+                                    >
+                                      Delete
+                                    </button>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </li>
+                      ) : (
+                        <li
+                          className="d-flex justify-content-between"
+                          key={index}
+                        >
+                          <div className="align-self-center">{todo.title}</div>
                           <div className="btn-group m-1">
                             <button
-                              className="btn light dropdown rounded"
+                              className="btn light dropdown rounded align-self-center"
                               type="button"
                               data-bs-toggle="dropdown"
                               id="dropdownMenuButton1"
                               aria-expanded="false"
                             >
-                              <b>... </b>
+                              <b> ... </b>
                             </button>
                             <ul
                               className="dropdown-menu"
@@ -354,10 +443,36 @@ const Index = () => {
                                   href="#"
                                 >
                                   <Icon
+                                    icon="material-symbols:check-circle-outline-rounded"
+                                    color="black"
+                                  />
+
+                                  <button
+                                    className="btn border-none"
+                                    onClick={() => {
+                                      handleChecked(
+                                        todo.id,
+                                        todo.title,
+                                        todo.checked
+                                      );
+                                    }}
+                                    // className={styles.delete}
+                                  >
+                                    Checked
+                                  </button>
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  className="dropdown-item d-flex align-items-center"
+                                  href="#"
+                                >
+                                  <Icon
                                     icon="material-symbols:push-pin-outline"
                                     color="black"
                                   />
                                   <button
+                                    className="btn border-none"
                                     onClick={() => {
                                       handlePinned(
                                         todo.id,
@@ -381,6 +496,7 @@ const Index = () => {
                                     color="black"
                                   />
                                   <button
+                                    className="btn border-none"
                                     onClick={() => {
                                       todoUpdate(todo.id, todo.title);
                                     }}
@@ -400,8 +516,9 @@ const Index = () => {
                                     color="black"
                                   />
                                   {/* 
-                            handle edit/ todo */}
+                              handle edit/ todo */}
                                   <button
+                                    className="btn border-none"
                                     onClick={() => {
                                       handleDelete(todo);
                                     }}
@@ -413,126 +530,12 @@ const Index = () => {
                               </li>
                             </ul>
                           </div>
-                        )}
-                      </li>
-                    ) : (
-                      <li
-                        className="d-flex justify-content-between"
-                        key={index}
-                      >
-                        <div className="align-self-center">{todo.title}</div>
-                        <div className="btn-group m-1">
-                          <button
-                            className="btn light dropdown rounded align-self-center"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            id="dropdownMenuButton1"
-                            aria-expanded="false"
-                          >
-                            <b> ... </b>
-                          </button>
-                          <ul
-                            className="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton1"
-                          >
-                            <li>
-                              <a
-                                className="dropdown-item d-flex align-items-center"
-                                href="#"
-                              >
-                                <Icon
-                                  icon="material-symbols:check-circle-outline-rounded"
-                                  color="black"
-                                />
-
-                                <button
-                                  className="btn border-none"
-                                  onClick={() => {
-                                    handleChecked(
-                                      todo.id,
-                                      todo.title,
-                                      todo.checked
-                                    );
-                                  }}
-                                  // className={styles.delete}
-                                >
-                                  Checked
-                                </button>
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                className="dropdown-item d-flex align-items-center"
-                                href="#"
-                              >
-                                <Icon
-                                  icon="material-symbols:push-pin-outline"
-                                  color="black"
-                                />
-                                <button
-                                  className="btn border-none"
-                                  onClick={() => {
-                                    handlePinned(
-                                      todo.id,
-                                      todo.title,
-                                      todo.pinned
-                                    );
-                                  }}
-                                  // className={styles.delete}
-                                >
-                                  Pin on the Top
-                                </button>
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                className="dropdown-item d-flex align-items-center"
-                                href="#"
-                              >
-                                <Icon
-                                  icon="material-symbols:autorenew"
-                                  color="black"
-                                />
-                                <button
-                                  className="btn border-none"
-                                  onClick={() => {
-                                    todoUpdate(todo.id, todo.title);
-                                  }}
-                                  // className={styles.delete}
-                                >
-                                  Update
-                                </button>
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                className="dropdown-item d-flex align-items-center"
-                                href="#"
-                              >
-                                <Icon
-                                  icon="material-symbols:delete-outline"
-                                  color="black"
-                                />
-                                {/* 
-                              handle edit/ todo */}
-                                <button
-                                  className="btn border-none"
-                                  onClick={() => {
-                                    handleDelete(todo);
-                                  }}
-                                  // className={styles.delete}
-                                >
-                                  Delete
-                                </button>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                    );
-                  })
-              : "Enter a todo item"}
-          </ul>
+                        </li>
+                      );
+                    })
+                : "Enter a todo item"}
+            </ul>{" "}
+          </div>
         </div>
       </main>
     </div>
